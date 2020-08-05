@@ -18,6 +18,11 @@ export default {
           },
         },
       },
+      AuthLoading:{
+        screens: {
+          LoginScreen: 'login'
+        }
+      },
       NotFound: '*',
     },
   },
