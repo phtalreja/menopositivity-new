@@ -19,7 +19,7 @@ export default function LoginScreen({
         return;
 
     setLoading(true);
-
+    
     const response = await loginUser({
       email: email.value,
       password: password.value
