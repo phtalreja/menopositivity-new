@@ -8,12 +8,22 @@ export default {
         screens: {
           TabOne: {
             screens: {
-              TabOneScreen: 'one',
+              HomeScreen: 'home',
             },
           },
           TabTwo: {
             screens: {
-              TabTwoScreen: 'two',
+              EntriesScreen: 'entries',
+            },
+          },
+          TabThree: {
+            screens: {
+              CalendarScreen: 'calendar',
+            },
+          },
+          TabFour: {
+            screens: {
+              OptionsScreen: 'options',
             },
           },
         },
