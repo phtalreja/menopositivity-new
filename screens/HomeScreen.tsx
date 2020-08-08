@@ -1,3 +1,4 @@
+import { StackScreenProps } from '@react-navigation/stack';
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 
@@ -28,5 +29,13 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: '80%',
+  },
+  link: {
+    marginTop: 15,
+    paddingVertical: 15,
+  },
+  linkText: {
+    fontSize: 14,
+    color: '#2e78b7',
   },
 });

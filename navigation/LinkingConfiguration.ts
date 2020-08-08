@@ -28,6 +28,20 @@ export default {
           },
         },
       },
+      Auth:{
+        screens: {
+          Login: {
+            screens: {
+              LoginScreen: 'login',
+            }
+          },
+          Signup: {
+            screens: {
+              SignupScreen: 'signup'
+            }
+          },
+        }
+      },
       NotFound: '*',
     },
   },
