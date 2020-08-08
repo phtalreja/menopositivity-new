@@ -1,22 +1,29 @@
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme, DarkTheme, useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
+import LoadingScreen from '../screens/LoadingScreen';
 import LoginScreen from '../screens/LoginScreen';
 import { RootStackParamList } from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
+import AuthNavigator from './AuthNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
+import { User } from '@firebase/auth-types'
+import { Text, TouchableOpacity } from 'react-native';
+import { loginUser, logoutUser } from "../api/auth-api";
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
-export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+export default function Navigation(
+  { colorScheme, authUser, setUser }: { colorScheme: ColorSchemeName, authUser : User | null, setUser : Function },
+  ) {
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
       theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <RootNavigator />
+      <RootNavigator authUser={authUser} setUser={setUser} />
     </NavigationContainer>
   );
 }
@@ -25,12 +32,25 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 // Read more here: https://reactnavigation.org/docs/modal
 const Stack = createStackNavigator<RootStackParamList>();
 
-function RootNavigator() {
+function RootNavigator({authUser, setUser}: {authUser : User | null, setUser: Function}) {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="AuthLoading" component={LoginScreen} />
-      <Stack.Screen name="Root" component={BottomTabNavigator} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+    <Stack.Navigator screenOptions={{ headerShown: true }}>
+      { authUser ? (
+        <Stack.Screen name="Root" component={BottomTabNavigator}
+          options={{ 
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => {setUser(null); logoutUser()}}
+              >
+                <Text>Logout</Text>
+              </TouchableOpacity>
+            ),
+        }}
+        />
+        ) : (
+        <Stack.Screen name="Auth" component={AuthNavigator} />
+        
+      )}
     </Stack.Navigator>
-  );
+  )
 }

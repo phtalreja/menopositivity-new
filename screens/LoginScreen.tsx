@@ -8,7 +8,7 @@ import { loginUser } from "../api/auth-api";
 
 export default function LoginScreen({
   navigation,
-}: StackScreenProps<RootStackParamList, 'AuthLoading'>) {
+}: StackScreenProps<RootStackParamList, 'Auth'>) {
   const [email, setEmail] = React.useState({ value: "", error: "" });
   const [password, setPassword] = React.useState({ value: "", error: "" });
   const [loading, setLoading] = React.useState(false);

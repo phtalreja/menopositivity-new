@@ -18,9 +18,18 @@ export default {
           },
         },
       },
-      AuthLoading:{
+      Auth:{
         screens: {
-          LoginScreen: 'login'
+          Login: {
+            screens: {
+              LoginScreen: 'login',
+            }
+          },
+          Signup: {
+            screens: {
+              SignupScreen: 'signup'
+            }
+          },
         }
       },
       NotFound: '*',
