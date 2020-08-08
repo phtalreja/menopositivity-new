@@ -34,10 +34,11 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator({authUser, setUser}: {authUser : User | null, setUser: Function}) {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: true }}>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       { authUser ? (
         <Stack.Screen name="Root" component={BottomTabNavigator}
           options={{ 
+            headerShown: true,
             headerRight: () => (
               <TouchableOpacity
                 onPress={() => {setUser(null); logoutUser()}}

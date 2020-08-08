@@ -46,7 +46,7 @@ export default function BottomTabNavigator() {
         name="Options"
         component={TabFourNavigator}
         options={{
-          tabBarIcon: ({ color }) => <TabBarIcon name="ios-help" color={color} />,
+          tabBarIcon: ({ color }) => <TabBarIcon name="ios-more" color={color} />,
         }}
       />
     </BottomTab.Navigator>

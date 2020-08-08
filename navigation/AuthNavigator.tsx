@@ -1,8 +1,9 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import { AuthStackParamList, LoginParamList } from '../types';
+import { AuthStackParamList, LoginParamList, SignupParamList } from '../types';
 import * as React from 'react';
 
 import LoginScreen from '../screens/LoginScreen';
+import SignupScreen from '../screens/SignupScreen';
 
 const AuthStack = createStackNavigator<AuthStackParamList>();
 
@@ -13,7 +14,12 @@ export default function AuthNavigator() {
       <AuthStack.Screen
         name="Login"
         component={LoginNavigator}
-        options={{ headerTitle: 'Login' }}
+        options={{ headerShown: false }}
+      />
+      <AuthStack.Screen
+        name="Signup"
+        component={SignupNavigator}
+        options={{ headerShown: false }}
       />
     </AuthStack.Navigator>
   );
@@ -27,8 +33,22 @@ function LoginNavigator() {
       <LoginStack.Screen
         name="LoginScreen"
         component={LoginScreen}
-        options={{ headerTitle: 'Login' }}
+        options={{ headerShown: false }}
       />
     </LoginStack.Navigator>
+  );
+}
+
+const SignupStack = createStackNavigator<SignupParamList>();
+
+function SignupNavigator() {
+  return (
+    <SignupStack.Navigator>
+      <SignupStack.Screen
+        name="SignupScreen"
+        component={SignupScreen}
+        options={{ headerShown: false }}
+      />
+    </SignupStack.Navigator>
   );
 }
