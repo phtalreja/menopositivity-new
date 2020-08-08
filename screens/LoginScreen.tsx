@@ -5,7 +5,7 @@ import { Input, Button } from 'react-native-elements';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import { RootStackParamList, AuthStackParamList } from '../types';
+import { AuthStackParamList } from '../types';
 import Logo from '../components/Logo';
 import { loginUser } from "../api/auth-api";
 
@@ -42,7 +42,11 @@ export default function LoginScreen({
   return (
     <View style={styles.container}>
       <Logo />
+      
       <View style={{width:'100%'}}>
+        <View style={{alignItems: 'flex-start', marginLeft:20, marginBottom:20}}>
+          <Text style={{fontSize: 30, fontWeight: 'bold'}}>Login</Text>
+        </View>
         <Input 
           placeholder="Email"
           value={email.value} 
@@ -50,7 +54,7 @@ export default function LoginScreen({
           autoCapitalize="none"
           textContentType="emailAddress"
           keyboardType="email-address"
-          leftIcon={{ type:'font-awesome', name: 'user-o', size: 25}}
+          leftIcon={{ type:'font-awesome', name: 'envelope-o', size: 20}}
           inputContainerStyle= {styles.inputContainer}
           containerStyle= {styles.outerInputContainer}
         />
@@ -61,7 +65,7 @@ export default function LoginScreen({
           secureTextEntry
           inputContainerStyle= {styles.inputContainer}
           containerStyle= {styles.outerInputContainer}
-          leftIcon={{ type:'font-awesome', name: 'lock', size: 25}}
+          leftIcon={{ type:'font-awesome', name: 'key', size: 20}}
           onChangeText={text => setPassword({value: text, error: ""})}
 
         />
@@ -97,8 +101,6 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     paddingLeft: 20,
     backgroundColor: '#fff'
-    
-  
   },
   outerInputContainer: {
     shadowOffset:{ width: 0,  height: 10, },
