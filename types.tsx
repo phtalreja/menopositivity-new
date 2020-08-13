@@ -42,6 +42,7 @@ export type SignupParamList = {
 };
 
 export type AuthDetails = {
+  name?: string,
   email: string,
   password: string
 }

@@ -1,7 +1,8 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import * as React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, TextInput } from 'react-native';
+import { StyleSheet, TouchableOpacity, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Input, Button } from 'react-native-elements';
+import { Text, View } from '../components/Themed';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -40,51 +41,62 @@ export default function LoginScreen({
   }
 
   return (
-    <View style={styles.container}>
-      <Logo />
-      
-      <View style={{width:'100%'}}>
-        <View style={{alignItems: 'flex-start', marginLeft:20, marginBottom:20}}>
-          <Text style={{fontSize: 30, fontWeight: 'bold'}}>Login</Text>
-        </View>
-        <Input 
-          placeholder="Email"
-          value={email.value} 
-          onChangeText={text => setEmail({value: text, error: ""})}
-          autoCapitalize="none"
-          textContentType="emailAddress"
-          keyboardType="email-address"
-          leftIcon={{ type:'font-awesome', name: 'envelope-o', size: 20}}
-          inputContainerStyle= {styles.inputContainer}
-          containerStyle= {styles.outerInputContainer}
-        />
-        <Input 
-          placeholder="Password" 
-          value={password.value} 
-          autoCapitalize="none" 
-          secureTextEntry
-          inputContainerStyle= {styles.inputContainer}
-          containerStyle= {styles.outerInputContainer}
-          leftIcon={{ type:'font-awesome', name: 'key', size: 20}}
-          onChangeText={text => setPassword({value: text, error: ""})}
+    <KeyboardAvoidingView 
+      style={styles.container} 
+      behavior={Platform.OS == "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={0}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
 
-        />
-      </View>
-      <Button 
-        title='Login' 
-        type='solid' 
-        onPress={_handleLogin} 
-        buttonStyle={[styles.loginButton, {backgroundColor: Colors[colorScheme].tint}]}
-      />
-      <View style={{flexDirection: "row"}}>
-        <Text>Don't have an account? </Text>
-        <TouchableOpacity
-          onPress={()=> navigation.navigate('Signup')}
-        >
-          <Text style={{color: Colors[colorScheme].tint}}>Sign up</Text>
-          </TouchableOpacity>
-      </View>
-    </View>
+        <View style={styles.innerContainer}>
+          <Logo />
+          
+          <View style={{width:'100%'}}>
+            <View style={{alignItems: 'flex-start', marginLeft:20, marginBottom:20}}>
+              <Text style={{fontSize: 30, fontWeight: 'bold'}}>Login</Text>
+            </View>
+            <Input 
+              placeholder="Email"
+              value={email.value} 
+              onChangeText={text => setEmail({value: text, error: ""})}
+              autoCapitalize="none"
+              textContentType="emailAddress"
+              keyboardType="email-address"
+              leftIcon={{ type:'font-awesome', name: 'envelope-o', size: 20}}
+              leftIconContainerStyle={{marginRight: 10}}
+              inputContainerStyle= {styles.inputContainer}
+              containerStyle= {styles.outerInputContainer}
+            />
+            <Input 
+              placeholder="Password" 
+              value={password.value} 
+              autoCapitalize="none" 
+              secureTextEntry
+              inputContainerStyle= {styles.inputContainer}
+              containerStyle= {styles.outerInputContainer}
+              leftIcon={{ type:'font-awesome', name: 'key', size: 20}}
+              leftIconContainerStyle={{marginRight: 10}}
+              onChangeText={text => setPassword({value: text, error: ""})}
+
+            />
+          </View>
+          <Button 
+            title='Login' 
+            type='solid' 
+            onPress={_handleLogin} 
+            buttonStyle={[styles.loginButton, {backgroundColor: Colors[colorScheme].tint}]}
+          />
+          <View style={{flexDirection: "row"}}>
+            <Text>Don't have an account? </Text>
+            <TouchableOpacity
+              onPress={()=> navigation.navigate('Signup')}
+            >
+              <Text style={{color: Colors[colorScheme].tint}}>Sign up</Text>
+              </TouchableOpacity>
+          </View>
+        </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -92,9 +104,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'space-around',
+    marginTop: 20
+  },
+  innerContainer: {
+    width:'100%', 
     padding: 20,
+    alignItems: 'center', 
+    height: '100%', 
+    justifyContent: 'space-around', 
+    
   },
   inputContainer: {
     borderBottomWidth: 0,
