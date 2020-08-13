@@ -36,6 +36,8 @@ function RootNavigator({authUser, setUser}: {authUser : User | null, setUser: Fu
         <Stack.Screen name="Root" component={BottomTabNavigator}
           options={{ 
             headerShown: true,
+            headerTitle:'',
+            headerTransparent: true,
             headerRight: () => (
               <Icon
                 name='sign-out'

@@ -70,7 +70,7 @@ function TabOneNavigator() {
       <TabOneStack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{ headerTitle: 'Home Screen' }}
+        options={{ headerTitle: 'Home', headerShown:true, headerTransparent: true }}
       />
     </TabOneStack.Navigator>
   );
@@ -84,7 +84,7 @@ function TabTwoNavigator() {
       <TabTwoStack.Screen
         name="EntriesScreen"
         component={EntriesScreen}
-        options={{ headerTitle: 'Entries Screen' }}
+        options={{ headerTitle: 'Entries', headerShown:true, headerTransparent: true }}
       />
     </TabTwoStack.Navigator>
   );
@@ -98,7 +98,7 @@ function TabThreeNavigator() {
       <TabThreeStack.Screen
         name="CalendarScreen"
         component={CalendarScreen}
-        options={{ headerTitle: 'Entries Screen' }}
+        options={{ headerTitle: 'Calendar', headerShown:true, headerTransparent: true }}
       />
     </TabThreeStack.Navigator>
   );
@@ -112,7 +112,7 @@ function TabFourNavigator() {
       <TabFourStack.Screen
         name="OptionsScreen"
         component={OptionsScreen}
-        options={{ headerTitle: 'More Screen' }}
+        options={{ headerTitle: 'More', headerShown:true, headerTransparent: true }}
       />
     </TabFourStack.Navigator>
   );
