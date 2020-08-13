@@ -3,6 +3,7 @@ import * as React from 'react';
 import { StyleSheet, TouchableOpacity, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import { Text, View } from '../components/Themed';
+import { nameValidator, emailValidator, passwordValidator } from "../utils/utils";
 import Logo from '../components/Logo';
 import { signUpUser } from "../api/auth-api";
 
@@ -16,18 +17,37 @@ export default function SignupScreen({
   const colorScheme = useColorScheme();
   const [email, setEmail] = React.useState({ value: "", error: "" });
   const [password, setPassword] = React.useState({ value: "", error: "" });
-  const [name, setName] = React.useState("")
+  const [name, setName] = React.useState({ value: "", error: "" })
   const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState("");
 
   const _handleSignup = async() =>{
+    if (loading)
+      return;
+
+    const nameError = nameValidator(name.value);
+    const emailError = emailValidator(email.value);
+    const passwordError = passwordValidator(password.value);
+
+    if (emailError || passwordError || nameError) {
+      setName({ ...name, error: nameError });
+      setEmail({ ...email, error: emailError });
+      setPassword({ ...password, error: passwordError });
+      return;
+    }
+  
+    setLoading(true);
+
     const response = await signUpUser({
-      name: name,
+      name: name.error,
       email: email.value,
       password: password.value
     });
     if (response.error) {
-        console.log(response.error)
+      setError(response.error);
     }
+
+    setLoading(false);
   }
   return (
     <KeyboardAvoidingView 
@@ -38,34 +58,43 @@ export default function SignupScreen({
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.innerContainer}>
           {/* <Logo /> */}
-          <View style={{alignItems: 'flex-start'}}>
+          <View>
             <Text style={{fontSize: 30, fontWeight: 'bold'}}>Sign up</Text>
           </View>
           <View style={{width:'100%', }}>
             <Input
               placeholder="name"
-              value={name}
-              onChangeText={text => setName(text)}
+              returnKeyType="next"
+              value={name.value}
+              errorMessage={name.error}
+              onChangeText={text => setName({value: text, error: ""})}
               inputContainerStyle= {styles.inputContainer}
               containerStyle= {styles.outerInputContainer}
               leftIcon={{ type:'font-awesome', name: 'user-o', size: 20}}
               leftIconContainerStyle={{marginRight: 10}}
+              errorStyle={{paddingVertical:5}}
             />
             <Input 
               placeholder="Email"
-              value={email.value} 
+              returnKeyType="next"
+              value={email.value}
+              errorMessage={email.error}
               onChangeText={text => setEmail({value: text, error: ""})}
               autoCapitalize="none"
+              autoCompleteType="email"
               textContentType="emailAddress"
               keyboardType="email-address"
               inputContainerStyle= {styles.inputContainer}
               containerStyle= {styles.outerInputContainer}
               leftIcon={{ type:'font-awesome', name: 'envelope-o', size: 20}}
               leftIconContainerStyle={{marginRight: 10}}
+              errorStyle={{paddingVertical:5}}
             />
             <Input 
-              placeholder="Password" 
-              value={password.value} 
+              placeholder="Password"
+              returnKeyType="done" 
+              value={password.value}
+              errorMessage={password.error} 
               autoCapitalize="none" 
               secureTextEntry
               inputContainerStyle= {styles.inputContainer}
@@ -73,6 +102,7 @@ export default function SignupScreen({
               onChangeText={text => setPassword({value: text, error: ""})}
               leftIcon={{ type:'font-awesome', name: 'key', size: 20}}
               leftIconContainerStyle={{marginRight: 10}}
+              errorStyle={{paddingVertical:5}}
             />
           </View>
           <Button 

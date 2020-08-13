@@ -9,6 +9,7 @@ import useColorScheme from '../hooks/useColorScheme';
 import { AuthStackParamList } from '../types';
 import Logo from '../components/Logo';
 import { loginUser } from "../api/auth-api";
+import { emailValidator, passwordValidator } from "../utils/utils";
 
 export default function LoginScreen({
   navigation,
@@ -21,10 +22,18 @@ export default function LoginScreen({
 
   const _handleLogin = async() => {
     if (loading) 
-        return;
-
+      return;
+    const emailError = emailValidator(email.value);
+    const passwordError = passwordValidator(password.value);
+    if (emailError || passwordError) {
+      setEmail({ ...email, error: emailError });
+      setPassword({ ...password, error: passwordError });
+      return;
+    }
+    
     setLoading(true);
     
+    console.log("tries login")
     const response = await loginUser({
       email: email.value,
       password: password.value
@@ -33,10 +42,7 @@ export default function LoginScreen({
         setError(response.error);
         console.log(response.error)
     }
-    else {
-        // navigation.replace('Root');
-    }
-  
+
     setLoading(false);
   }
 
@@ -57,19 +63,25 @@ export default function LoginScreen({
             </View>
             <Input 
               placeholder="Email"
+              returnKeyType="next"
               value={email.value} 
               onChangeText={text => setEmail({value: text, error: ""})}
+              errorMessage={email.error}
               autoCapitalize="none"
+              autoCompleteType="email"
               textContentType="emailAddress"
               keyboardType="email-address"
               leftIcon={{ type:'font-awesome', name: 'envelope-o', size: 20}}
               leftIconContainerStyle={{marginRight: 10}}
               inputContainerStyle= {styles.inputContainer}
               containerStyle= {styles.outerInputContainer}
+              errorStyle={{paddingVertical:5}}
             />
             <Input 
               placeholder="Password" 
+              returnKeyType="done"
               value={password.value} 
+              errorMessage={password.error}
               autoCapitalize="none" 
               secureTextEntry
               inputContainerStyle= {styles.inputContainer}
@@ -77,7 +89,7 @@ export default function LoginScreen({
               leftIcon={{ type:'font-awesome', name: 'key', size: 20}}
               leftIconContainerStyle={{marginRight: 10}}
               onChangeText={text => setPassword({value: text, error: ""})}
-
+              errorStyle={{paddingVertical:5}}
             />
           </View>
           <Button 
