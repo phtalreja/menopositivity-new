@@ -1,20 +1,27 @@
-import firebase from 'firebase'
+import * as firebase from 'firebase'
+import 'firebase/firestore'
 import { AuthDetails } from "../types";
 import { config } from "../config/index"
 
 // Initialize Firebase
 firebase.initializeApp(config.firebase);
 
+const db = firebase.firestore();
+
 export const logoutUser = () => {
     firebase.auth().signOut();
 };
 
-export const signUpUser = async ({ email, password }: AuthDetails) => {
+export const signUpUser = async ({ name, email, password }: AuthDetails) => {
     try {
       await firebase.auth().createUserWithEmailAndPassword(email, password);
-    //   firebase.auth().currentUser.updateProfile({
-    //     displayName: name
-    //   });
+      firebase.auth().currentUser?.updateProfile({
+        displayName: name
+      });
+      db.collection("users").add({
+        name: name,
+        email: email,
+      })
   
       return {};
     } catch (error) {
@@ -46,7 +53,7 @@ export const signUpUser = async ({ email, password }: AuthDetails) => {
 export const loginUser = async ({ email, password }: AuthDetails) => {
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password);
-      return {};
+      return {};``
     } catch (error) {
       switch (error.code) {
         case "auth/invalid-email":

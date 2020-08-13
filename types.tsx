@@ -37,7 +37,12 @@ export type LoginParamList = {
   LoginScreen: undefined;
 };
 
+export type SignupParamList = {
+  SignupScreen: undefined;
+};
+
 export type AuthDetails = {
+  name?: string,
   email: string,
   password: string
 }
