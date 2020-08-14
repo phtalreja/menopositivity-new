@@ -3,13 +3,27 @@ import { StyleSheet } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
+import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 
 export default function CalendarScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Calendar</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="/screens/CalendarScreen.tsx" />
+      <Calendar
+        theme={styles.calendarTheme}
+        style={{
+          margin: 10,
+          borderColor: 'gray',
+
+        }} 
+        markedDates={{
+          '2020-08-20': {startingDay: true, color: 'orange', endingDay: true},
+          '2020-08-22': {selected: true, startingDay: true, color: 'teal'},
+          '2020-08-23': {selected: true, endingDay: true, color: 'teal'},
+          '2020-08-04': {startingDay: true, color: 'lightgreen', endingDay: true}
+        }}
+        // Date marking style [simple/period/multi-dot/custom]. Default = 'simple'
+        markingType={'period'}
+      />
     </View>
   );
 }
@@ -17,16 +31,10 @@ export default function CalendarScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+  
+    justifyContent: 'space-around',
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  calendarTheme: {
+    backgroundColor: '#ffffff00',
   },
 });
