@@ -1,11 +1,17 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import { StyleSheet } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 
+import { getCalendarData } from '../api/calendar'
+
 export default function CalendarScreen() {
+  type MarkedDates = { [x: string] : {startingDay: boolean, endingDay: boolean, color: string}};
+  const [markedDates, setMarkedDates] = useState({});
+  getCalendarData((dates: MarkedDates) => setMarkedDates(dates), (error) => console.log(error));
+
   return (
     <View style={styles.container}>
       <Calendar
@@ -15,13 +21,7 @@ export default function CalendarScreen() {
           borderColor: 'gray',
 
         }} 
-        markedDates={{
-          '2020-08-20': {startingDay: true, color: 'orange', endingDay: true},
-          '2020-08-22': {selected: true, startingDay: true, color: 'teal'},
-          '2020-08-23': {selected: true, endingDay: true, color: 'teal'},
-          '2020-08-04': {startingDay: true, color: 'lightgreen', endingDay: true}
-        }}
-        // Date marking style [simple/period/multi-dot/custom]. Default = 'simple'
+        markedDates={markedDates}
         markingType={'period'}
       />
     </View>
