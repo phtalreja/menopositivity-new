@@ -70,7 +70,7 @@ function TabOneNavigator() {
       <TabOneStack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{ headerTitle: 'Home', headerShown:true, headerTransparent: true }}
+        options={{ headerTitle: 'Your Stats' }}
       />
     </TabOneStack.Navigator>
   );
