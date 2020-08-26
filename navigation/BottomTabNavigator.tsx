@@ -8,7 +8,7 @@ import useColorScheme from '../hooks/useColorScheme';
 import HomeScreen from '../screens/HomeScreen';
 import EntriesScreen from '../screens/EntriesScreen';
 import CalendarScreen from '../screens/CalendarScreen';
-import OptionsScreen from '../screens/CalendarScreen';
+import OptionsScreen from '../screens/OptionsScreen';
 
 import { BottomTabParamList, TabOneParamList, TabTwoParamList, TabThreeParamList, TabFourParamList } from '../types';
 
@@ -70,7 +70,7 @@ function TabOneNavigator() {
       <TabOneStack.Screen
         name="HomeScreen"
         component={HomeScreen}
-        options={{ headerTitle: 'Your Stats' }}
+        options={{ headerTitle: 'Your Stats', headerShown:true  }}
       />
     </TabOneStack.Navigator>
   );
@@ -84,7 +84,7 @@ function TabTwoNavigator() {
       <TabTwoStack.Screen
         name="EntriesScreen"
         component={EntriesScreen}
-        options={{ headerTitle: 'Entries', headerShown:true, headerTransparent: true }}
+        options={{ headerTitle: 'Entries', headerShown:true }}
       />
     </TabTwoStack.Navigator>
   );
@@ -98,7 +98,7 @@ function TabThreeNavigator() {
       <TabThreeStack.Screen
         name="CalendarScreen"
         component={CalendarScreen}
-        options={{ headerTitle: 'Calendar', headerShown:true, headerTransparent: true }}
+        options={{ headerTitle: 'Calendar', headerShown:true}}
       />
     </TabThreeStack.Navigator>
   );
@@ -112,7 +112,7 @@ function TabFourNavigator() {
       <TabFourStack.Screen
         name="OptionsScreen"
         component={OptionsScreen}
-        options={{ headerTitle: 'More', headerShown:true, headerTransparent: true }}
+        options={{ headerTitle: 'More', headerShown:true }}
       />
     </TabFourStack.Navigator>
   );

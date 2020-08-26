@@ -31,13 +31,11 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 function RootNavigator({authUser, setUser}: {authUser : User | null, setUser: Function}) {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator screenOptions={{ headerShown: true, headerTransparent: true }}>
       { authUser ? (
         <Stack.Screen name="Root" component={BottomTabNavigator}
           options={{ 
-            headerShown: true,
             headerTitle:'',
-            headerTransparent: true,
             headerRight: () => (
               <Icon
                 name='sign-out'

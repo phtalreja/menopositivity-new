@@ -1,10 +1,6 @@
-import * as firebase from 'firebase'
+import firebase from '../config/firebase'
 import 'firebase/firestore'
 import { AuthDetails } from "../types";
-import { config } from "../config/index"
-
-// Initialize Firebase
-firebase.initializeApp(config.firebase);
 
 const db = firebase.firestore();
 
